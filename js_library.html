@@ -1,0 +1,70 @@
+<script>
+
+  var _ = {
+    //Produces a new array of values by mapping each value in list through a transformation function
+   map: function(arr, callback) {
+        for(var i = 0; i < arr.length; i++) {
+          arr[i] = callback(arr[i]);
+        }
+        return arr;
+   },
+   //Also known as inject and foldl, reduce boils down a list of values into a single value.
+   reduce: function(arr, callback, initialize) {
+     var result = initialize;
+     for(var i = 0; i < arr.length; i++) {
+       result += arr[i];
+     }
+     return result;
+
+   },
+  //  Looks through each value in the list, returning the first one that passes a truth test (predicate), or undefined if no value passes the test. The function returns as soon as it finds an acceptable element, and doesn't traverse the entire list.
+   find: function(arr, callback) {
+          for(var i = 0; i < arr.length; i++) {
+            if(callback(arr[i])) {
+              return arr[i];
+            }
+          }
+   },
+   //Looks through each value in the list, returning an array of all the values that pass a truth test
+   filter: function(arr, callback){
+           var results = [];
+           for(var i = 0; i < arr.length; i++) {
+              if(callback(arr[i])){
+                results.push(arr[i]);
+              }
+           }
+           return results;
+   },
+   //Returns the values in list without the elements that the truth test (predicate) passes. The opposite of filter.
+   reject: function(arr, callback ) {
+     var results = [];
+     for(var i = 0; i < arr.length; i++) {
+       if(!callback(arr[i])) {
+         results.push(arr[i]);
+       }
+     }
+     return results;
+   }
+ }
+
+ var evens = _.filter([1,2,3,4,5,6],function(num){return num % 2 === 0; });
+ console.log("filter results are: " + evens);
+
+ var findRejects = _.reject([1,2,3,4,5,6],function(num){return num % 2 === 0; });
+ console.log("findRejects results are: " + findRejects);
+
+ var findEvens = _.find([3,5,6,7], function(num) {return num % 2 === 0;});
+ console.log("find results are: " + findEvens);
+
+ var doubles = _.map([1,2,3], function(num) { return num * 2; });
+ console.log("map doubles:" + doubles);
+ var doublesIncremented = _.map(doubles, function(num) { return num + 1; });
+ console.log("map doubles incremented:" + doublesIncremented);
+
+ var sum = _.reduce([1,2,3], function(memo,num){ return memo+num; }, 0);
+ console.log("sum for reduce: " + sum);
+
+ var concat = _.reduce(["You","are","awesome"], function(memo,num){ return memo + num; }, "");
+ console.log("concat for reduce: " + concat);
+
+</script>
